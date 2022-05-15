@@ -27,39 +27,36 @@ print('There are a total of ' + str(len(crabID)) + ' items in the table')
 i = 0 
 while i < len(crabID): 
     response = requests.get(crabID[i])
+    data = response.json()
+    i = i + 1
     print(i)
-    data.append(response.json())
-    i = i + 1 
     
-
-j = 0
-while j < len(data):
-    itemID = data[j]
+    itemID = data
     itemID = itemID['result']['id']
-    classname = data[j]
+    classname = data
     classname = classname['result']['class_name']
-    shell = data[j]
+    shell = data
     shell = shell['result']['shell_name']
-    horn = data[j]
+    horn = data
     horn = horn['result']['horn_name']
-    body = data[j]
+    body = data
     body = body['result']['body_name']
-    mouth = data [j]
+    mouth = data
     mouth = mouth['result']['mouth_name']
-    eyes = data[j]
+    eyes = data
     eyes = eyes['result']['eyes_name']
-    pincer = data[j]
+    pincer = data
     pincer = pincer['result']['pincers_name']
-    skill = data[j]
+    skill = data
     skill = skill['result']['skills'][0]['name']
-    breedcount = data[j]
+    breedcount = data
     breedcount = breedcount['result']['breed_count']
     print(itemID + ' ' + skill)
 
     cursor.execute('''INSERT INTO Crabs (crab_id, class, shell, horn, body, mouth, eyes, pincer, skill, breed_count)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                     (itemID, classname, shell, horn, body, mouth, eyes, pincer, skill, breedcount))
-    j = j + 1
+
 
 print('done') 
 print(len(crabID))
